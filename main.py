@@ -1,6 +1,5 @@
 from kivy.core.window import Window
 from kivy.app import App
-from kivy.event import EventDispatcher
 from kivy.graphics.vertex_instructions import Ellipse
 from kivy.properties import Clock, NumericProperty
 from kivy.uix.anchorlayout import AnchorLayout
@@ -13,8 +12,6 @@ from kivy.lang import Builder
 
 
 Builder.load_file("animation.kv")
-
-
 
 
 class AwesomeApp(App):
@@ -43,6 +40,8 @@ class GameLayout(BoxLayout):
     DT_JUMP = 10
     HEIGHT_JUMP = 200
     DELTA_TIME = 0.01
+    SPEED_INCREASE_SCORE = 0.01
+    SPEED_OBSTACLE = 10
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -66,18 +65,17 @@ class GameLayout(BoxLayout):
             self.land = False
             self.child_position_y = self.STARTING_POINT_Y
 
-        self.score += 0.01
+        self.score += self.SPEED_INCREASE_SCORE
         if self.obstacle is None:
             with self.canvas:
                 # self.obstacle = Ellipse(pos = (self.width-OBSTACLE_SIZE, HEIGHT_LEAP_OBS), size=(OBSTACLE_SIZE,OBSTACLE_SIZE), color = (1,1,1,1))
                 self.obstacle = Image(source = "images/carrot.png", pos = (self.width-self.OBSTACLE_SIZE, self.HEIGHT_LEAP_OBS), size=(self.OBSTACLE_SIZE,self.OBSTACLE_SIZE))
         else :
             x,y = self.obstacle.pos
-            event = EventDispatcher()
             if x < (self.child_position_x+(2/3* self.IMAGE_SIZE)):
                 self.obstacle.pos = (self.width-self.OBSTACLE_SIZE, y)
             else:
-                self.obstacle.pos = (x-10,y)
+                self.obstacle.pos = (x-self.SPEED_OBSTACLE,y)
 
     def button_clicked(self):
         print("boy need to jump")
