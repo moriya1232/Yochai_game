@@ -1,13 +1,28 @@
-<MyLayout>:
-    BoxLayout:
-        #Button:
-        #    size: 50,50
-        #    text: "Hello!"
-        Image:
-            source: "images/boy.gif"
-            anim_delay: 0.05
-            size_hint_y: None
-            height: dp(300)
+
+# #:set image_size dp(200)
+
+<GameLayout>:
+    orientation: 'vertical'
+    Label:
+        text: str(int(root.score)) + "  :דוקינ"
+        color: 0,0,0,1
+        font_size: '40dp'
+        font_name: "fonts/dragon.ttf"
+        size_hint: 1, 0.2
+    Label:
+        Button:
+            id: "child"
+            pos: root.child_position_x,root.child_position_y
+            size: dp(root.IMAGE_SIZE), dp(root.IMAGE_SIZE)
+            size_hint: None,None
+            background_color: 0,0,0,0
+            on_press: root.button_clicked()
+            Image:
+                source: "images/boy.gif"
+                anim_delay: 0.05
+                size: self.parent.size
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
 
 
 
