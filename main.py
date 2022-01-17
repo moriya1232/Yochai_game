@@ -8,6 +8,8 @@ from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.widget import Widget
 from kivy.lang import Builder
+import keyboard
+
 
 
 
@@ -37,11 +39,11 @@ class GameLayout(BoxLayout):
     HEIGHT_LEAP_OBS = 70
     STARTING_POINT_X = 30
     STARTING_POINT_Y =30
-    DT_JUMP = 10
+    DT_JUMP = 3
     HEIGHT_JUMP = 300
     DELTA_TIME = 0.01
     SPEED_INCREASE_SCORE = 0.01
-    SPEED_OBSTACLE = 10
+    SPEED_OBSTACLE = 6
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -53,6 +55,13 @@ class GameLayout(BoxLayout):
 
 
     def update(self, dt):
+        try:  # used try so that if user pressed other than the given key error will not be shown
+            if keyboard.is_pressed(keyboard.KEY_UP):
+                self.button_clicked()
+                print('You Pressed up Key!')
+        except:
+            print("ERROR on press up key")
+
         if self.jump and self.child_position_y >= self.HEIGHT_JUMP:
             self.jump = False
             self.land = True
