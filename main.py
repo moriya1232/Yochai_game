@@ -38,7 +38,7 @@ class GameLayout(BoxLayout):
     STARTING_POINT_X = 30
     STARTING_POINT_Y =30
     DT_JUMP = 10
-    HEIGHT_JUMP = 200
+    HEIGHT_JUMP = 300
     DELTA_TIME = 0.01
     SPEED_INCREASE_SCORE = 0.01
     SPEED_OBSTACLE = 10
@@ -72,8 +72,16 @@ class GameLayout(BoxLayout):
                 self.obstacle = Image(source = "images/carrot.png", pos = (self.width-self.OBSTACLE_SIZE, self.HEIGHT_LEAP_OBS), size=(self.OBSTACLE_SIZE,self.OBSTACLE_SIZE))
         else :
             x,y = self.obstacle.pos
-            if x < (self.child_position_x+(2/3* self.IMAGE_SIZE)):
-                self.obstacle.pos = (self.width-self.OBSTACLE_SIZE, y)
+            if x < 0:
+                self.obstacle.pos = (self.width - self.OBSTACLE_SIZE, y)
+            elif x < (self.child_position_x+(2/3* self.IMAGE_SIZE)):
+                # success jumping
+                if y < self.child_position_y:
+                    self.obstacle.pos = (x - self.SPEED_OBSTACLE, y)
+                else:
+                    #TODO: need finish game
+                    self.score -= 10
+                    self.obstacle.pos = (self.width-self.OBSTACLE_SIZE, y)
             else:
                 self.obstacle.pos = (x-self.SPEED_OBSTACLE,y)
 
